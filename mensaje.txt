@@ -1,0 +1,15 @@
+Pipe = Valida datos entrantes
+Guard= Asegunran las solicitudes entrantes que los usuarios se autentiquen
+Controller: Son la logica de enrutamiento
+Servicio: Logica de negocio
+Repositoru: Acceso a la base de datos
+
+
+Controller = Manejo de request entrantes
+Service: Manejo de datos y acceso a la logica de negocio
+Modules: Grupo de codigos
+Pipes: Datos de validaciones
+Filter: Manejo de error cuando ocurre un error durante el request
+Guard: Manejo de autentificacion
+Interceptors - Agrega una logica extra a las request entrante o salida 
+Repositories: Manejo de datos guardado en la BD
