@@ -27,21 +27,32 @@ Decoradores
 
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { CreateMensajeDto } from './dtos/create-mensaje.dto';
-
-
+import { MensajeService } from './mensajes.service';
 
 @Controller('mensajes')
 export class MensajesController {
+  mensajeService : MensajeService;
+
+  constructor(){
+    //No hagas esto en produccion usaremos INJECTION pero para prueba usaremos por construtor hasta que entienda como funciona
+    this.mensajeService = new MensajeService();
+  }
+
+
   @Get()
-  listMensajes() {}
+  listMensajes() {
+    return this.mensajeService.findAll()
+  }
 
   @Post()
   createMensaje(@Body() body: CreateMensajeDto) {
-    console.log(body);
+   // console.log(body);
+   return this.mensajeService.create(body.content);
   }
 
   @Get('/:id')
   getMensaje(@Param('id') id: string) {
-    console.log(id);
+    //console.log(id);
+    return this.mensajeService.findOne(id);
   }
 }
