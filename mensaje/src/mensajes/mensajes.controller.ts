@@ -26,6 +26,9 @@ Decoradores
 */
 
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { CreateMensajeDto } from './dtos/create-mensaje.dto';
+
+
 
 @Controller('mensajes')
 export class MensajesController {
@@ -33,7 +36,7 @@ export class MensajesController {
   listMensajes() {}
 
   @Post()
-  createMensaje(@Body() body: any) {
+  createMensaje(@Body() body: CreateMensajeDto) {
     console.log(body);
   }
 
