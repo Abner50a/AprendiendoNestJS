@@ -13,3 +13,14 @@ Filter: Manejo de error cuando ocurre un error durante el request
 Guard: Manejo de autentificacion
 Interceptors - Agrega una logica extra a las request entrante o salida 
 Repositories: Manejo de datos guardado en la BD
+
+//borrar git
+cd {{appname}}
+rm -rf .git 
+# rm -r -fo .git # if on Windows powershell
+cd ..    
+git add .  
+
+nest g module nombreModulo
+nest g service nombreModulo=>servicio
+nest g controller NombreControllador
