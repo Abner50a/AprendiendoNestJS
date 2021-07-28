@@ -1,10 +1,11 @@
+import { Injectable } from '@nestjs/common';
 import { MensajesRepository } from './mensajes.repository';
-export class MensajeService {
-  mensajeRepo: MensajesRepository;
 
-  constructor() {
-    //Ejemplo esto no se hace en en producciíon
-    this.mensajeRepo = new MensajesRepository();
+///injectable usa para manerar las instancia de las clases y por lo general se aplican en repository y services.
+@Injectable()
+export class MensajeService {
+
+  constructor(public mensajeRepo : MensajesRepository ) {
   }
 
   findOne(id: string) {

@@ -25,34 +25,41 @@ Decoradores
 
 */
 
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  NotFoundException,
+} from '@nestjs/common';
+
 import { CreateMensajeDto } from './dtos/create-mensaje.dto';
 import { MensajeService } from './mensajes.service';
 
 @Controller('mensajes')
 export class MensajesController {
-  mensajeService : MensajeService;
-
-  constructor(){
-    //No hagas esto en produccion usaremos INJECTION pero para prueba usaremos por construtor hasta que entienda como funciona
-    this.mensajeService = new MensajeService();
-  }
-
+  constructor(public mensajeService: MensajeService) {}
 
   @Get()
   listMensajes() {
-    return this.mensajeService.findAll()
+    return this.mensajeService.findAll();
   }
 
   @Post()
   createMensaje(@Body() body: CreateMensajeDto) {
-   // console.log(body);
-   return this.mensajeService.create(body.content);
+    // console.log(body);
+    return this.mensajeService.create(body.content);
   }
 
   @Get('/:id')
-  getMensaje(@Param('id') id: string) {
-    //console.log(id);
-    return this.mensajeService.findOne(id);
+  async getMensaje(@Param('id') id: string) {
+    const mensaje = await this.mensajeService.findOne(id);
+
+    if (!mensaje) {
+      throw new NotFoundException('Mensaje no encontrado');
+    }
+
+    return mensaje;
   }
 }
