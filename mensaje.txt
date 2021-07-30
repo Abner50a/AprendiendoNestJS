@@ -24,3 +24,10 @@ git add .
 nest g module nombreModulo
 nest g service nombreModulo=>servicio
 nest g controller NombreControllador
+
+
+
+/** Como Crear una entidad */
+1..Crear un archivo entity.ts y crear una clase con todas las propiedades y sus decorator
+2..Conectamos la entidad al modulo que perternece el repositorio.
+3.Conectamos la entidad a la conexion primimaria de la app agregandolo en entity[]
