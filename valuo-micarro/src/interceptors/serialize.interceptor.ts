@@ -4,20 +4,28 @@ import {
   ExecutionContext,
   CallHandler
 } from '@nestjs/common';
+
+
 import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs';
 import { Observable } from 'rxjs';
+import { UserDto } from '../usuarios/dtos/user.dto';
 
 export class SerializableInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, handler: CallHandler): Observable<any> {
     // Inicia algo antes de hacer un request
     //Por el manejo de request
-   // console.log('Inicio algo antes de hacer un request',context);
+    // console.log('Inicio algo antes de hacer un request',context);
 
     return handler.handle().pipe(
-      map((data: any) =>{
+      map((data: any) => {
         //Inicio algo antes de enviar la repuesta o response.
-        console.log('Inicio algo antes de enviar la repuesta o response',data);
+      
+        //  console.log('Inicio algo antes de enviar la repuesta o response', data);
+        
+        return plainToClass(UserDto, data, {
+          excludeExtraneousValues: true
+        })
       })
     )
   }

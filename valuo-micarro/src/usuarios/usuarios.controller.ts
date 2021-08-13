@@ -19,7 +19,7 @@ export class UsuariosController {
   @Get('/:id')
   async finduser(@Param('id') id: string) {
     //Param extrae el valor de la url por ejemplo /:id este va estraer el valor de la id
-    console.log('handler esta curriendo')
+  //  console.log('handler esta curriendo')
     const user = await this.userService.findOne(parseInt(id));
 
     if (!user) {
