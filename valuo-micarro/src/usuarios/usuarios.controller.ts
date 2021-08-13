@@ -2,6 +2,7 @@ import { Body, Controller, Post, Get, Param, Patch, Query, Delete, NotFoundExcep
 import { SerializableInterceptor } from 'src/interceptors/serialize.interceptor';
 import { CrearUsuarioDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { UserDto } from './dtos/user.dto';
 
 import { UsuariosService } from './usuarios.service';
 
@@ -15,7 +16,7 @@ export class UsuariosController {
     this.userService.create(body.email, body.password);
   }
 
-  @UseInterceptors(SerializableInterceptor) //Hacemos un intercept personalizado para esta clase
+  @UseInterceptors(new SerializableInterceptor(UserDto)) //Hacemos un intercept personalizado para esta clase
   @Get('/:id')
   async finduser(@Param('id') id: string) {
     //Param extrae el valor de la url por ejemplo /:id este va estraer el valor de la id

@@ -2,16 +2,17 @@ import {
   UseInterceptors,
   NestInterceptor,
   ExecutionContext,
-  CallHandler
+  CallHandler,
 } from '@nestjs/common';
-
 
 import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs';
 import { Observable } from 'rxjs';
-import { UserDto } from '../usuarios/dtos/user.dto';
+
 
 export class SerializableInterceptor implements NestInterceptor {
+  constructor(private dto:any ){}
+
   intercept(context: ExecutionContext, handler: CallHandler): Observable<any> {
     // Inicia algo antes de hacer un request
     //Por el manejo de request
@@ -20,13 +21,13 @@ export class SerializableInterceptor implements NestInterceptor {
     return handler.handle().pipe(
       map((data: any) => {
         //Inicio algo antes de enviar la repuesta o response.
-      
+
         //  console.log('Inicio algo antes de enviar la repuesta o response', data);
-        
-        return plainToClass(UserDto, data, {
-          excludeExtraneousValues: true
-        })
-      })
-    )
+
+        return plainToClass(this.dto, data, {
+          excludeExtraneousValues: true,
+        });
+      }),
+    );
   }
 }
