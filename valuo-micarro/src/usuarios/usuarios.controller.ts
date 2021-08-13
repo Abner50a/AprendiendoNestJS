@@ -8,8 +8,6 @@ import {
   Query,
   Delete,
   NotFoundException,
-  UseInterceptors,
-  ClassSerializerInterceptor,
 } from '@nestjs/common';
 
 import { CrearUsuarioDto } from './dtos/create-user.dto';
@@ -20,7 +18,9 @@ import { UsuariosService } from './usuarios.service';
 import { UserDto } from './dtos/user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 
+
 @Controller('auth')
+@Serialize(UserDto)
 export class UsuariosController {
   constructor(private userService: UsuariosService) { }
 
@@ -29,7 +29,7 @@ export class UsuariosController {
     this.userService.create(body.email, body.password);
   }
 
-  @Serialize(UserDto) //Hacemos un intercept personalizado para esta clase
+ // @Serialize(UserDto) //Hacemos un intercept personalizado para esta clase
   @Get('/:id')
   async finduser(@Param('id') id: string) {
     //Param extrae el valor de la url por ejemplo /:id este va estraer el valor de la id
