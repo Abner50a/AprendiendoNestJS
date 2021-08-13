@@ -1,11 +1,24 @@
-import { Body, Controller, Post, Get, Param, Patch, Query, Delete, NotFoundException, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
-import { SerializableInterceptor } from 'src/interceptors/serialize.interceptor';
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Param,
+  Patch,
+  Query,
+  Delete,
+  NotFoundException,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+} from '@nestjs/common';
+
 import { CrearUsuarioDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { UserDto } from './dtos/user.dto';
 
 import { UsuariosService } from './usuarios.service';
 
+import { UserDto } from './dtos/user.dto';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
 
 @Controller('auth')
 export class UsuariosController {
@@ -16,15 +29,15 @@ export class UsuariosController {
     this.userService.create(body.email, body.password);
   }
 
-  @UseInterceptors(new SerializableInterceptor(UserDto)) //Hacemos un intercept personalizado para esta clase
+  @Serialize(UserDto) //Hacemos un intercept personalizado para esta clase
   @Get('/:id')
   async finduser(@Param('id') id: string) {
     //Param extrae el valor de la url por ejemplo /:id este va estraer el valor de la id
-  //  console.log('handler esta curriendo')
+    //  console.log('handler esta curriendo')
     const user = await this.userService.findOne(parseInt(id));
 
     if (!user) {
-      throw new NotFoundException('usuario no encontrado')
+      throw new NotFoundException('usuario no encontrado');
     }
 
     return user;
@@ -32,7 +45,7 @@ export class UsuariosController {
 
   @Get()
   buscarUsuarios(@Query('email') email: string) {
-    return this.userService.find(email)
+    return this.userService.find(email);
   }
 
   @Delete('/:id')
@@ -41,8 +54,6 @@ export class UsuariosController {
   }
   @Patch('/:id')
   updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
-    return this.userService.update(parseInt(id), body)
+    return this.userService.update(parseInt(id), body);
   }
-
-
 }

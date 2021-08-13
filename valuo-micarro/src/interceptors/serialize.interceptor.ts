@@ -9,6 +9,9 @@ import { plainToClass } from 'class-transformer';
 import { map } from 'rxjs';
 import { Observable } from 'rxjs';
 
+export function Serialize(dto: any){
+  return UseInterceptors(new SerializableInterceptor(dto));
+}
 
 export class SerializableInterceptor implements NestInterceptor {
   constructor(private dto:any ){}
