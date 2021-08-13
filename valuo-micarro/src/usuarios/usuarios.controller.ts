@@ -1,4 +1,4 @@
-import { Body, Controller, Post,Get,Param,Patch,Query,Delete } from '@nestjs/common';
+import { Body, Controller, Post,Get,Param,Patch,Query,Delete,NotFoundException } from '@nestjs/common';
 import { CrearUsuarioDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
@@ -14,9 +14,15 @@ export class UsuariosController {
   }
 
   @Get('/:id')
-  finduser(@Param('id') id: string){
+  async finduser(@Param('id') id: string){
     //Param extrae el valor de la url por ejemplo /:id este va estraer el valor de la id
-    return this.userService.findOne(parseInt(id));
+    const user = await this.userService.findOne(parseInt(id));
+
+    if(!user){
+      throw new NotFoundException('usuario no encontrado')
+    }
+
+    return user;
   }
 
   @Get()
