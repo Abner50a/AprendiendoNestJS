@@ -1,8 +1,10 @@
 import { Body, Controller, Post, Get, Param, Patch, Query, Delete, NotFoundException, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import { SerializableInterceptor } from 'src/interceptors/serialize.interceptor';
 import { CrearUsuarioDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
 import { UsuariosService } from './usuarios.service';
+
 
 @Controller('auth')
 export class UsuariosController {
@@ -13,10 +15,11 @@ export class UsuariosController {
     this.userService.create(body.email, body.password);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor) //Insertamos el uSe QUE Se protegio en user.intente
+  @UseInterceptors(SerializableInterceptor) //Hacemos un intercept personalizado para esta clase
   @Get('/:id')
   async finduser(@Param('id') id: string) {
     //Param extrae el valor de la url por ejemplo /:id este va estraer el valor de la id
+    console.log('handler esta curriendo')
     const user = await this.userService.findOne(parseInt(id));
 
     if (!user) {
