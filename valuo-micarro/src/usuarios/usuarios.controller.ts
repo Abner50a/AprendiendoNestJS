@@ -30,6 +30,11 @@ export class UsuariosController {
     return this.authService.registrarse(body.email,body.password);
   }
 
+  @Post('/login')
+  login(@Body() body: CrearUsuarioDto) {
+    return this.authService.iniciarSesion(body.email,body.password);
+  }
+
   // @Serialize(UserDto) //Hacemos un intercept personalizado para esta clase
   @Get('/:id')
   async finduser(@Param('id') id: string) {
