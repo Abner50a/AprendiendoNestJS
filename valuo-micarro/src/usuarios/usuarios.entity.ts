@@ -16,7 +16,7 @@ export class Usuarios {
 
   @AfterInsert()
   logInsert(){
-    console.log('Insertar usuario con id', this.id);
+    console.log('Insertar usuario con id', this.email);
   }
 
   @AfterUpdate()

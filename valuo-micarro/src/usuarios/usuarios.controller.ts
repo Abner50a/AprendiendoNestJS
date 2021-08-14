@@ -8,6 +8,7 @@ import {
   Query,
   Delete,
   NotFoundException,
+  Session,
 } from '@nestjs/common';
 
 import { CrearUsuarioDto } from './dtos/create-user.dto';
@@ -19,20 +20,36 @@ import { UserDto } from './dtos/user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { AuthService } from './auth.service';
 
-
 @Controller('auth')
 @Serialize(UserDto)
 export class UsuariosController {
-  constructor(private userService: UsuariosService, private authService: AuthService) { }
+  constructor(
+    private userService: UsuariosService,
+    private authService: AuthService,
+  ) {}
+
+
+  @Get('/quienSoy')
+  quienSoy(@Session() session: any){
+    return this.userService.findOne(session.userId);
+    
+  }
+
+
+
 
   @Post('/signup')
-  crearUsuario(@Body() body: CrearUsuarioDto) {
-    return this.authService.registrarse(body.email,body.password);
+  async crearUsuario(@Body() body: CrearUsuarioDto, @Session() session: any ) {
+    const usuario = await this.authService.registrarse(body.email, body.password);
+    session.userId = usuario.id;
+    return usuario;
   }
 
   @Post('/login')
-  login(@Body() body: CrearUsuarioDto) {
-    return this.authService.iniciarSesion(body.email,body.password);
+  async login(@Body() body: CrearUsuarioDto, @Session() session: any) {
+    const usuario =await  this.authService.iniciarSesion(body.email, body.password);
+    session.userId = usuario.id;
+    return usuario;
   }
 
   // @Serialize(UserDto) //Hacemos un intercept personalizado para esta clase
