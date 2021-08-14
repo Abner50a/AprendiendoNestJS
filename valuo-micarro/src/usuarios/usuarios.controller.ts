@@ -32,9 +32,15 @@ export class UsuariosController {
   @Get('/quienSoy')
   quienSoy(@Session() session: any){
     return this.userService.findOne(session.userId);
-    
+
   }
 
+  @Post('/salir')
+  cerrarSesion(@Session() session: any){
+    session.userId = null;
+    console.log(session.userId )
+
+  }
 
 
 
