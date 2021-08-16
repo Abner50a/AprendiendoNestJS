@@ -1,0 +1,2 @@
+npm run db:create CreateTags => Crea una migracion de TypeOrmModule estamos creando la primera tabla
+db:migrate : ejecuta todas las migracioens pendiente
