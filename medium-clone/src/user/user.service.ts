@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
+import { createUserDto } from "./createUser.dto";
 
 @Injectable()
 export class UserService{
 
 
-  async createUser(){
-    return 'crear servicio desde servicio'
+  async createUser(createUserDto: createUserDto){
+    return createUserDto;
   }
 }
