@@ -1,2 +1,14 @@
 npm run db:create CreateTags => Crea una migracion de TypeOrmModule estamos creando la primera tabla
 db:migrate : ejecuta todas las migracioens pendiente
+
+
+//Crear modulo de maner facil
+
+1) Primero se crea el modulo name.module.ts
+  1a) Se exporta el modulo en app.modules
+2) Luego se crea el controllador nombre.controller.ts
+  2a) Entonces se agrega en el modulo nuevo con controllers[] al controlador name.controll.ts
+3) Se crea el servicio de name.service.ts
+  3a) Agregar el servicio o provedor con providers[]  al modulo del nuevo que se quiere hacer user.service.ts
+
+4) Crear el constructor de nombre.controller.ts para enlazar el servicio con el ClassConstructor 
